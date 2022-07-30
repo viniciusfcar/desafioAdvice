@@ -1,0 +1,53 @@
+
+{% extends 'index.html' %}
+{% load bootstrap %}
+
+{% block style %}
+    <style>        
+        #header {
+            background-color: #DCDCDC;
+            text-align: center;
+            width: 100%;
+        } 
+
+        #body {
+            position:absolute;
+            top:20%;
+            margin-left: 25%;
+        }
+    </style>
+{% endblock %}
+
+{% block corpo %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mt-5">
+                <div class="card col-md-6" id="body">
+                    <div id="header">
+                        <h1 class="mt-3">Delete Carro</h1>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mt-5">
+                                <h5 class="card-title">Tem certeza que deseja deletar o carro do proprietário {{context.carro.proprietario.nome}} ?</h5>
+                            </div>
+                            <div class="form-row mt-3">
+                                <div class="form-group col-md-6">
+                                    <a href="{% url 'index' %}" class="btn btn-danger col-md-4">
+                                        <span class="nav-text">Cancelar</span>
+                                    </a>
+                                    <button type="submit" class="btn btn-success col-md-6">
+                                        Confirmar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+
+{% extends 'index.html' %}
+{% load bootstrap %}
+
+{% block style %}
+    <style>
+        #body {
+            margin: 2%;
+            
+        }
+        
+        #header {
+            background-color: #DCDCDC;
+            text-align: center;
+            width: 100%;
+        } 
+    </style>
+{% endblock %}
+
+{% block corpo %}
+
+    <div class="container-fluid">
+        <div id="header">
+            <h1 class="mt-3">Listagem Proprietários</h1>
+        </div>
+        <div class="row">
+            {% for proprietario in context.proprietarios %}
+                <div class="card col-md-3 mt-5" id="body">
+                    <div class="row">
+                        <a href="{% url 'cadastroCarro' proprietario.id %}" class="btn btn-primary col-md-4 m-2">
+                            <i class="bi bi-patch-plus-fill"> Adicionar Carro</i>
+                        </a>
+                        <a href="{% url 'alterarProprietario' proprietario.id %}" class="btn btn-warning col-md-2 m-2">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="{% url 'deleteProprietario' proprietario.id %}" class="btn btn-danger col-md-2 m-2">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+
+                    </div>
+                    <div class="card-body row">
+                        <h3>{{proprietario.nome}}</h3>
+                    </div>
+                    {% if proprietario.potencialComprador %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Potêncial Comprador</li>
+                        </ul>
+                    {% else %}
+                        {% for carro in proprietario.carros.all %}
+                            <ul class="list-group list-group-flush row"></ul>
+                            <div class="container">
+                                <div class="row" id="body">
+                                    <div class="col-sm">
+                                        <li class="list-group">Carro: {{carro.modelo}} - {{carro.cor}}</li>
+                                    </div>
+                                    <div class="col-sm">
+                                        <a class="btn btn-danger" href="{% url 'deleteCarro' carro.id %}">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
